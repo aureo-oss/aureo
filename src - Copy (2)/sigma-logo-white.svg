@@ -1,0 +1,27 @@
+<svg width="240" height="240" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldenShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF700"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FFC300"/>
+      <stop offset="100%" stop-color="#FFB300"/>
+    </linearGradient>
+  </defs>
+  <path
+    d="
+      M20,90
+      L60,20
+      L100,90
+      M60,20
+      L60,65
+      Q60,110 100,110
+      Q140,110 140,65
+      L140,20
+    "
+    fill="none"
+    stroke="url(#goldenShine)"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

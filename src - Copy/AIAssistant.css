@@ -1,0 +1,679 @@
+/* Main container */
+.ai-assistant-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Closed state - launch button */
+  .ai-launch-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .ai-launch-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .ai-launch-button .icon {
+    font-size: 24px;
+  }
+  
+  .pulse-dot {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: #4caf50;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
+  }
+  
+  /* Open state - assistant window */
+  .ai-assistant {
+    width: 400px;
+    max-width: 90vw;
+    height: 600px;
+    max-height: 80vh;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .ai-header {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .ai-title {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .ai-subtitle {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .close-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Messages area */
+  .ai-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .ai-empty-state {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .welcome-message {
+    text-align: center;
+    padding: 20px;
+    color: #555;
+  }
+  
+  .welcome-message h3 {
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .welcome-message ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+    text-align: left;
+  }
+  
+  .welcome-message li {
+    margin: 8px 0;
+    padding: 8px 12px;
+    background: rgba(110, 142, 251, 0.1);
+    border-radius: 6px;
+    color: #6e8efb;
+  }
+  
+  .ai-message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    line-height: 1.4;
+    word-wrap: break-word;
+  }
+  
+  .ai-message.user {
+    align-self: flex-end;
+    background: #6e8efb;
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+  
+  .ai-message.ai {
+    align-self: flex-start;
+    background: white;
+    color: #333;
+    border: 1px solid #eee;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .ai-message.loading {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 5px 15px;
+  }
+  
+  .loading-dots {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .loading-dots span {
+    width: 8px;
+    height: 8px;
+    background: #ccc;
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out;
+  }
+  
+  .loading-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+  
+  .loading-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+  
+  @keyframes bounce {
+    0%, 80%, 100% { 
+      transform: scale(0);
+    }
+    40% { 
+      transform: scale(1);
+    }
+  }
+  
+  /* Input area */
+  .ai-input-area {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    background: white;
+  }
+  
+  .input-container {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .input-container input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 24px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  .input-container input:focus {
+    border-color: #6e8efb;
+  }
+  
+  .mic-button, .send-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #f0f0f0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  
+  .mic-button:hover, .send-button:hover {
+    background: #e0e0e0;
+  }
+  
+  .mic-button.active {
+    background: #ff4d4d;
+    color: white;
+    animation: pulse 1.5s infinite;
+  }
+  
+  .send-button {
+    background: #6e8efb;
+    color: white;
+  }
+  
+  .send-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .input-hint {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    margin-top: 8px;
+  }
+  
+  /* Message styles */
+  .client-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .client-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .client-type {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  
+  .client-type.wedding {
+    background: #ffe6f2;
+    color: #d63384;
+  }
+  
+  .client-type.portrait {
+    background: #e6f7ff;
+    color: #0d6efd;
+  }
+  
+  .client-type.commercial {
+    background: #e6ffee;
+    color: #198754;
+  }
+  
+  .client-details {
+    padding: 15px;
+  }
+  
+  .client-details p {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .last-contact {
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .client-notes {
+    padding: 12px 15px;
+    background: #fffaf0;
+    border-top: 1px solid #ffe8cc;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .invoices-section {
+    padding: 12px 15px;
+    border-top: 1px solid #eee;
+  }
+  
+  .invoice-summary {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  
+  .invoice-summary .unpaid {
+    color: #dc3545;
+    font-weight: 600;
+  }
+  
+  .invoice-summary .paid {
+    color: #28a745;
+  }
+  
+  .invoice-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 6px;
+  }
+  
+  .invoice-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 13px;
+  }
+  
+  .invoice-item:last-child {
+    border-bottom: none;
+  }
+  
+  .invoice-item .status {
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  
+  .invoice-item .status.paid {
+    color: #28a745;
+  }
+  
+  .invoice-item .status.pending {
+    color: #fd7e14;
+  }
+  
+  .invoice-item .status.unpaid {
+    color: #dc3545;
+  }
+  
+  /* Stats dashboard */
+  .stats-dashboard {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .stats-dashboard h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .stat-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #eee;
+  }
+  
+  .stat-card.warning {
+    background: #fff3cd;
+    border-color: #ffeeba;
+  }
+  
+  .stat-card.danger {
+    background: #f8d7da;
+    border-color: #f5c6cb;
+  }
+  
+  .stat-card.highlight {
+    background: #d1e7dd;
+    border-color: #badbcc;
+  }
+  
+  .stat-value {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  
+  .stat-label {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  /* Invoice report */
+  .invoice-report {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .invoice-summary-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  
+  .invoice-table th {
+    text-align: left;
+    padding: 8px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .invoice-table td {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .invoice-row.paid {
+    background: rgba(40, 167, 69, 0.05);
+  }
+  
+  .invoice-row.unpaid {
+    background: rgba(220, 53, 69, 0.05);
+  }
+  
+  .invoice-row.pending {
+    background: rgba(253, 126, 20, 0.05);
+  }
+  
+  .invoice-row.overdue {
+    border-left: 3px solid #dc3545;
+  }
+  
+  .status {
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  
+  .status.paid {
+    color: #28a745;
+  }
+  
+  .status.unpaid {
+    color: #dc3545;
+  }
+  
+  .status.pending {
+    color: #fd7e14;
+  }
+  
+  /* Help section */
+  .help-section {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .help-section h3 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .help-section ul {
+    padding-left: 20px;
+  }
+  
+  .help-section li {
+    margin: 8px 0;
+  }
+  
+  /* Response messages */
+  .response-message {
+    background: #e9f7ef;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .greeting-message {
+    background: #f0f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .help-message {
+    background: #fff8e1;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+  }
+  
+  .error-message {
+    background: #f8d7da;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .not-found-message {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #6c757d;
+  }
+  
+  .suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+  }
+  
+  .suggestions li {
+    padding: 8px 12px;
+    margin: 4px 0;
+    background: rgba(110, 142, 251, 0.1);
+    border-radius: 4px;
+    color: #6e8efb;
+    cursor: pointer;
+  }
+  
+  .suggestions li:hover {
+    background: rgba(110, 142, 251, 0.2);
+  }
+  
+  .clarification-message {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  .clarification-options {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+  }
+  
+  .clarification-options li {
+    padding: 8px 12px;
+    margin: 4px 0;
+    background: rgba(110, 142, 251, 0.1);
+    border-radius: 4px;
+    color: #6e8efb;
+    cursor: pointer;
+  }
+  
+  .clarification-options li:hover {
+    background: rgba(110, 142, 251, 0.2);
+  }
+  
+  .client-contact-info {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .client-contact-info h4 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .client-contact-info p {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .default-response {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
